@@ -13,7 +13,7 @@ public class Shoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame.
@@ -24,7 +24,7 @@ public class Shoot : MonoBehaviour
         //If left click is pressed down, launch a projectile. 
         //then add a force to the projectile 
         //added to the camera so that the projectile goes in the direction your camera is facing.
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             launchedProjectile = Instantiate(prefabProjectile, transform.position + (transform.forward * 3), Quaternion.identity);
             launchedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * projectileForce, ForceMode.Impulse);

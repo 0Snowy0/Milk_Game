@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     // Unity tool to help with coding movement
     public CharacterController controller; 
-    public float speed = 12f; 
+    public float speed = 6f; 
     private Vector3 playerVelocity; 
     public bool groundedPlayer; 
     // accerleration due to gravity on Earth's surface
@@ -16,14 +16,14 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // finds the CharacterController and sets it equal to our variable
+        // finds the CharacterController 
         controller = this.GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // checks if the controller is interacting with the ground
+        // checks if the player is on the ground
         groundedPlayer = controller.isGrounded;
 
         // stops player from moving down into the ground
@@ -38,37 +38,34 @@ public class Movement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        // establishes direction the player should be moving based on the mouse position
-        // relative to the direction the player is facing
+        // establishes direction the player should be moving based on mouse position
         Vector3 move = transform.right * x + transform.forward * z;
 
-        // moves the player in the correct direction at a speed multiplied by the amount of time in between frames (Time.deltaTime)
+        // moves the player in the correct direction at a speed 
         controller.Move(move * speed * Time.deltaTime);
 
         //run
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            speed = 20f;
+            speed = 12f;
         }
         //normal
         else
         {
-            speed = 12f;
+            speed = 6f;
         }
 
-        // changes the height position of the player when the space bar is pressed
-        // and the player is on the ground
+        // checks if spacebar is pressed and player is on the ground
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
-            // changes the players movement on the y axis by 
-            // the square root of the set jump height * the direction we want it to move in * the gravity
+            // changes the players movement on the y axis by the set jump height
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravity);
         }
 
         // adds gravity to that y axis movement
         playerVelocity.y += gravity * Time.deltaTime;
 
-        // this moves the player by the by the specified y value based on how the player jumps
+        // moves the player by the specified y value based on how the player jumps
         controller.Move(playerVelocity * Time.deltaTime);
 
     }
